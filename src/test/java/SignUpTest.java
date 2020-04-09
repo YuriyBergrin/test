@@ -1,78 +1,67 @@
+
+import com.codeborne.selenide.Condition;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.concurrent.TimeUnit;
-
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Configuration.browser;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static com.codeborne.selenide.Configuration.baseUrl;
 
 public class SignUpTest {
-    private static WebDriver driver;
+
     private static SignUpPage page;
 
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void setUp() {
         System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
-        if (driver != null) {
-            return;
-        }
-        driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            driver.quit();
-            driver = null;
-        }));
+        baseUrl = "https://www.spotify.com/us/signup/";
+        browser = "firefox";
     }
 
-    @After
-    public void tearDown() {
-//        driver.quit();
-//         driver = null;
+    @Before
+    public void start() {
+        page = new SignUpPage();
+        page.open();
     }
 
     @Test
     public void typeInvalidYear() {
-        driver.get("https://www.spotify.com/us/signup/");
-        page = new SignUpPage(driver);
         page.typeDay("1")
                 .setMonth("April")
                 .typeYear("85")
                 .setShare(true);
-        assertTrue(page.isErrorVisible("Please enter a valid year."));
-        assertFalse(page.isErrorVisible("When were you born?"));
+        page.getErrorByText("Please enter a valid year.").shouldBe(visible);
+        page.getErrorByText("When were you born?").shouldNotBe(visible);
     }
 
     @Test
     public void typeInvalidEmail() {
-        driver.get("https://www.spotify.com/us/signup/");
-        page = new SignUpPage(driver);
+        page = new SignUpPage();
         page.typeEmail("test112324@test.com")
                 .typeConfirmEmail("wrong@test.com")
                 .typeName("yuriy")
                 .clickSignUpButton();
-        assertTrue(page.isErrorVisible("Email address doesn't match."));
+        page.getErrorByText("Email address doesn't match.").shouldBe(visible);
     }
 
     @Test
     public void signUpWithEmptyPassword() {
-        driver.get("https://www.spotify.com/us/signup/");
-        page = new SignUpPage(driver);
+        page = new SignUpPage();
         page.typeEmail("test77712@test.ru")
                 .typeConfirmEmail("test77712@test.ru")
                 .typeName("Vasya")
                 .clickSignUpButton();
-        assertTrue(page.isErrorVisible("Enter a password to continue."));
+        page.getErrorByText("Enter a password to continue.").shouldBe(visible);
     }
 
     @Test
     public void typeInvalidValues() {
-        driver.get("https://www.spotify.com/us/signup/");
-        page = new SignUpPage(driver);
+        page = new SignUpPage();
         page.typeEmail("1124324")
                 .typeConfirmEmail("wrong@mail,com")
                 .typeName("TestName")
