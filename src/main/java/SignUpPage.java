@@ -1,13 +1,11 @@
+
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
 
@@ -26,7 +24,7 @@ public class SignUpPage {
     private String monthDropOption = "//select/option[text()='%s']";
     private By dayField = By.cssSelector("#register-dob-day");
     private By yearField = By.cssSelector("#register-dob-year");
-    private By sexRadioButton = By.cssSelector("#li-gender");
+    private String sexRadioButton = "//li[@id=\"li-gender\"]/label[normalize-space()='%s']/input";
     private By shareCheckBox = By.cssSelector("#register-thirdparty");
     private By registerButton = By.id("register-button-email-submit");
     private By errorLabel = xpath("//label[@class=\"has-error\" and text()!=\"\"]");
@@ -68,7 +66,7 @@ public class SignUpPage {
     }
 
     public SignUpPage setSex(String sex) {
-        $(sexRadioButton).selectRadio(sex);
+        $x(format(sexRadioButton, sex)).click();
         return this;
     }
 
@@ -78,6 +76,7 @@ public class SignUpPage {
     }
 
     public void clickSignUpButton() {
+        $(registerButton).waitUntil(enabled, 5000);
         $(registerButton).click();
     }
 
@@ -85,8 +84,8 @@ public class SignUpPage {
         return $$(errorLabel);
     }
 
-    public String getErrorByNumber(int number) {
-        return getErrors().get(number - 1).text();
+    public SelenideElement getErrorByNumber(int number) {
+        return getErrors().get(number - 1);
     }
 
     public SelenideElement getErrorByText(String text) {

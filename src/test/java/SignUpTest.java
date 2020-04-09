@@ -1,10 +1,12 @@
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Configuration.browser;
 import static org.junit.Assert.assertTrue;
@@ -68,6 +70,6 @@ public class SignUpTest {
                 .setSex("Male")
                 .setShare(false)
                 .clickSignUpButton();
-        assertEquals(7, page.getErrors().size());
+        page.getErrors().shouldHave(size(7));
     }
 }
