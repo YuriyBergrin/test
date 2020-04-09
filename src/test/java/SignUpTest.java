@@ -32,7 +32,7 @@ public class SignUpTest {
     @After
     public void tearDown() {
 //        driver.quit();
-//        driver = null;
+//         driver = null;
     }
 
     @Test
