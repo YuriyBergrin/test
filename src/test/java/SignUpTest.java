@@ -1,7 +1,7 @@
 
+import Pages.SignUpPage;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

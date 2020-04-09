@@ -1,20 +1,17 @@
+package Pages;
 
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import net.serenitybdd.core.pages.PageObject;
+import net.serenitybdd.core.pages.WebElementFacade;
+import net.thucydides.core.annotations.DefaultUrl;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import java.util.List;
+
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
 
-public class SignUpPage {
-
-    public SignUpPage open() {
-        Selenide.open("/");
-        return this;
-    }
+@DefaultUrl("https://www.spotify.com/us/signup/")
+public class SignUpPage extends PageObject {
 
     private By emailField = By.cssSelector("#register-email");
     private By confirmEmailField = By.cssSelector("#register-confirm-email");
@@ -31,64 +28,66 @@ public class SignUpPage {
     private String errorByText = "//label[@class=\"has-error\" and text()=\"%s\"]";
 
     public SignUpPage typeEmail(String email) {
-        $(emailField).val(email);
+        find(emailField).type(email);
         return this;
     }
 
     public SignUpPage typeConfirmEmail(String confirmEmail) {
-        $(confirmEmailField).val(confirmEmail);
+        find(confirmEmailField).type(confirmEmail);
         return this;
     }
 
     public SignUpPage typePassword(String password) {
-        $(passwordField).val(password);
+        find(passwordField).type(password);
         return this;
     }
 
     public SignUpPage typeName(String name) {
-        $(nameField).val(name);
+        find(nameField).type(name);
         return this;
     }
 
     public SignUpPage setMonth(String month) {
-        $(monthDropDown).selectOption(month);
+        find(monthDropDown).selectByValue(month);
         return this;
     }
 
     public SignUpPage typeDay(String day) {
-        $(dayField).val(day);
+        find(dayField).type(day);
         return this;
     }
 
     public SignUpPage typeYear(String year) {
-        $(yearField).val(year);
+        find(yearField).type(year);
         return this;
     }
 
     public SignUpPage setSex(String sex) {
-        $x(format(sexRadioButton, sex)).click();
+        find(format(sexRadioButton, sex)).click();
         return this;
     }
 
     public SignUpPage setShare(boolean value) {
-        $(shareCheckBox).setSelected(value);
+        WebElementFacade checkbox = find(shareCheckBox);
+        if (checkbox.isSelected() != value){
+            checkbox.click();
+        }
         return this;
     }
 
     public void clickSignUpButton() {
-        $(registerButton).waitUntil(enabled, 5000);
-        $(registerButton).click();
+        find(registerButton).click();
     }
 
-    public ElementsCollection getErrors() {
-        return $$(errorLabel);
+    public List<WebElementFacade> getErrors() {
+        return findAll(errorLabel);
     }
 
-    public SelenideElement getErrorByNumber(int number) {
+    public WebElementFacade getErrorByNumber(int number) {
         return getErrors().get(number - 1);
     }
 
-    public SelenideElement getErrorByText(String text) {
+    public WebElementFacade getErrorByText(String text) {
         return $(xpath(format(errorByText, text)));
     }
 
