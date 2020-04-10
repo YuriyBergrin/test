@@ -1,4 +1,4 @@
-запуск узда с помощью json
+
 
 java -Dwebdriver.gecko.driver=/home/administrator/IdeaProjects/test/src/test/resources/geckodriver
  -jar selenium-server-standalone-3.141.59.jar -role node
