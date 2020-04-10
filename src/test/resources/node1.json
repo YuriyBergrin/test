@@ -1,0 +1,14 @@
+{
+  "capabilities": [
+    {
+      "browserName": "firefox",
+      "maxInstances": 3
+    },
+    {
+      "browserName": "chrome",
+      "maxInstances": 1
+    }
+  ],
+  "port": 5555,
+  "hub": "http://172.18.0.1:4444"
+}
