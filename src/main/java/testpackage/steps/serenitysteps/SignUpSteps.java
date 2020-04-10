@@ -1,6 +1,6 @@
-package Steps;
+package testpackage.steps.serenitysteps;
 
-import Pages.SignUpPage;
+import testpackage.pages.SignUpPage;
 import net.thucydides.core.annotations.Step;
 import org.assertj.core.api.Assertions;
 

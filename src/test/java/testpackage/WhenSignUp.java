@@ -1,29 +1,19 @@
+package testpackage;
 
-import Pages.SignUpPage;
+import testpackage.pages.SignUpPage;
 
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Steps;
-import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import Steps.SignUpSteps;
+import testpackage.steps.serenitysteps.SignUpSteps;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 @RunWith(SerenityRunner.class)
 public class WhenSignUp {
 
     private static SignUpPage page;
-
-//    @BeforeClass
-//    public static void setUp() {
-//        System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
-//        baseUrl = "https://www.spotify.com/us/signup/";
-//        browser = "firefox";
-//    }
 
     @Steps
     SignUpSteps steps;
