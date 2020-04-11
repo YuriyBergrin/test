@@ -1,7 +1,8 @@
-package Steps;
+package testpackage.steps.serenitysteps;
 
-import Pages.SignUpPage;
+import testpackage.pages.SignUpPage;
 import net.thucydides.core.annotations.Step;
+import org.assertj.core.api.Assertions;
 
 public class SignUpSteps {
     SignUpPage page;
@@ -59,5 +60,20 @@ public class SignUpSteps {
     @Step
     public void click_sign_up_button() {
         page.clickSignUpButton();
+    }
+
+    @Step
+    public void should_see_error(String message) {
+        Assertions.assertThat(page.getErrorByText(message).isVisible());
+    }
+
+    @Step
+    public void should_not_see_error(String message) {
+        Assertions.assertThat(!page.getErrorByText(message).isVisible());
+    }
+
+    @Step
+    public void should_see_errors_count(int count) {
+        Assertions.assertThat(page.getErrors()).hasSize(count);
     }
 }
