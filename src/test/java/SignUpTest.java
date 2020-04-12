@@ -15,13 +15,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 public class SignUpTest {
-    private static WebDriver driver;
-    private static SignUpPage page;
+    private  RemoteWebDriver driver;
+    private  SignUpPage page;
 
     @Before
     public void setUp() throws MalformedURLException {
         DesiredCapabilities caps = DesiredCapabilities.firefox();
-        driver = new RemoteWebDriver(new URL("http://172.18.0.1:4444/wd/hub"), caps);
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), caps);
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
     }
 
