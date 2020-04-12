@@ -4,3 +4,4 @@ there are my different tests frameworks examples
 3. serenity
 4. jbehave
 5. selenium grid with json config for nodes
+6. selenoid with docker
